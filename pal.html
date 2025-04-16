@@ -3,454 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>plantPAL</title>
+    <title>PAL</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
             font-family: Impact, Arial Black, Arial, sans-serif;
         }
-
-        :root {
-            --primary-color: #0FD101;
-        }
-
-        html {
-             scroll-behavior: smooth; /* Add smooth scrolling for anchor links */
-        }
-
-        body {
-            background-color: #1a1a1a;
-            color: white;
-        }
-
-        .navbar {
-            background-color: rgba(15, 209, 1, 0.5); /* Semi-transparent initially */
-            margin: 16px;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: calc(100% - 32px); /* Account for margin */
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.6);
-            border-radius: 50px;
-            transition: background-color 0.4s ease, box-shadow 0.4s ease; /* Smooth transitions */
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            display: block;
-            margin-left: 3px;
-        }
-
-        .logo-background {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 70px;
-            width: 70px;
-            background-color: black;
-            border-radius: 50%;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: black; /* Initial color */
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease; /* Smooth transition for color change */
-        }
-         /* Style for nav links when scrolled */
-        .navbar.scrolled .nav-links a {
-             color: white;
-        }
-
-
-        .hero {
-            min-height: 100vh; /* Full viewport height */
-            background-image: url('https://i.pinimg.com/736x/8b/51/7a/8b517a4a1c294fa391476acad7c2f3e0.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: scroll; /* Changed from fixed to scroll for better mobile support */
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content img {
-             max-width: 200px;
-             margin-bottom: 20px;
-        }
-
-        .title-stack {
-            color: var(--primary-color);
+        
+        h1 {
+            color: #0FD101;
             font-size: 5rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
-
-        /* Section Base Styles (Optional: for consistent padding) */
-        section {
-            padding: 4rem 2rem; /* Add consistent vertical padding */
-            /* min-height removed here, set individually if needed */
-        }
-
-        /* About Us Section Styles */
-        #about {
-            background: linear-gradient(to bottom, #000500, #002005);
-            color: white;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center; /* Center content horizontally */
-            text-align: center; /* Center text within the elements */
-        }
-        #about h2 {
-            color: white;
-            margin: 0;
-             margin-bottom: 1rem; /* Add space below title */
-        }
-        /* Add paragraph styles if needed */
-        #about p {
-             font-family: Arial, sans-serif;
-             line-height: 1.6;
-             max-width: 80%; /* Optional: To prevent text from stretching too wide */
-             margin: 0 auto; /* Center the paragraph if max-width is set */
-        }
-
-
-        /* Info Section Styles */
-        #info {
-            min-height: 300px;
-            background: linear-gradient(to top, #000500, #002005);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center; /* Center content horizontally */
-            text-align: center; /* Center text within the elements */
-        }
-         #info h2 {
-            color: white;
-            margin: 0;
-            margin-bottom: 1rem; /* Add space below title */
-        }
-        /* Add paragraph styles if needed */
-         #info p {
-             font-family: Arial, sans-serif;
-             line-height: 1.6;
-             max-width: 80%; /* Optional: To prevent text from stretching too wide */
-             margin: 0 auto; /* Center the paragraph if max-width is set */
-        }
-
-
-        /* Founders Section Styles */
-        #founders {
-            background: linear-gradient(to bottom, #000500, #002005);
-            color: white;
-            min-height: 600px;
-            /* Padding is handled by the generic section style, adjusted below */
-            padding-top: 4rem;
-            padding-bottom: 6rem; /* Increased padding for space below names/button */
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center content horizontally */
-        }
-
-         #founders h2 {
-            color: white;
-            margin: 0;
-            margin-bottom: 3rem; /* Space below title */
-         }
-
-        #founders .founders-container {
-            display: flex;
-            justify-content: space-evenly; /* Even space distribution */
-            flex-wrap: wrap; /* Allow wrapping */
-            width: 100%;
-            max-width: 1120px; /* Container max width */
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 4rem; /* Space before the button */
-        }
-
-        .founder-item { /* New container for each box and name */
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center the name below the box */
-            margin: 20px 30px; /* Maintain spacing between founder items */
-        }
-
-        .founder-box {
-            width: 200px;
-            height: 200px;
-            background-color: #2a3a29; /* Adjusted background */
-            border-radius: 10px;
-            box-shadow: 3px 3px 8px rgba(0,0,0,0.4), 0 0 12px rgba(15, 209, 1, 0.4); /* Refined shadow */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
-            color: white;
-            font-weight: bold;
-            position: relative;
-            padding: 15px; /* Internal padding */
-            overflow: hidden; /* Hide potential overflow if needed */
-        }
-
-        #founders .founder-box img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.5); /* Optional border */
-        }
-
-        .founder-name {
-            color: white;
-            text-align: center;
-            margin-top: 10px; /* Add some space between the box and the name */
-        }
-
-        #founders .pal-button {
-             margin: 20px auto 0 auto; /* Margin top only, auto sides for centering */
-             padding: 12px 25px;
-             background-color: #041405;
-             color: #0EF516;
-             border: none;
-             border-radius: 5px;
-             cursor: pointer;
-             font-weight: bold;
-             font-size: 1rem;
-             transition: background-color 0.3s ease, transform 0.2s ease;
-             box-shadow: 3px 3px 8px rgba(0,0,0,0.4), 0 0 12px rgba(15, 209, 1, 0.4);
-        }
-         #founders .pal-button:hover {
-             background-color: #0caa01;
-             transform: scale(1.05); /* Slight scale effect on hover */
-         }
-
-        /* Mobile Styles */
-        .navbar-toggle {
-            display: none;
-        }
-
-        .navbar-toggle-label {
-            position: relative;
-            display: none;
-            width: 30px;
-            height: 30px;
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background-color: #041405;
+            color: #0EF516;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.4), 0 0 12px rgba(15, 209, 1, 0.4);
         }
-
-        .navbar-toggle-label span {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: black;
-            transform: translateY(-50%);
-            transition: background-color 0.3s ease;
+        
+        .back-button:hover {
+            background-color: #0caa01;
+            transform: scale(1.05);
         }
-
-        .navbar-toggle-label span::before,
-        .navbar-toggle-label span::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: black;
-            transition: transform 0.3s ease;
-        }
-
-        .navbar-toggle-label span::before {
-            top: -8px;
-        }
-
-        .navbar-toggle-label span::after {
-            top: 8px;
-        }
-
-        #navbar-toggle:checked + .navbar-toggle-label span {
-            background-color: transparent;
-        }
-
-        #navbar-toggle:checked + .navbar-toggle-label span::before {
-            transform: translateY(8px) rotate(45deg);
-        }
-
-        #navbar-toggle:checked + .navbar-toggle-label span::after {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: rgba(15, 209, 1, 0.9);
-                text-align: center;
-                padding: 1rem 0;
-                border-radius: 0 0 20px 20px;
-            }
-
-            .nav-links a {
-                padding: 0.75rem;
-                display: block;
-            }
-
-            .navbar-toggle-label {
-                display: block;
-            }
-
-            #navbar-toggle:checked ~ .nav-links {
-                display: flex;
-            }
-             .navbar.scrolled .nav-links a {
-             color: black;
-        }
-        }
-
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">
-            <div class="logo-background">
-                <img src="https://i.imgur.com/InZIqIO_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Logo">
-            </div>
-        </div>
-        <input type="checkbox" id="navbar-toggle" class="navbar-toggle">
-        <label for="navbar-toggle" class="navbar-toggle-label">
-            <span></span>
-        </label>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#info">Info</a>
-            <a href="#founders">Founders</a>
-        </div>
-    </nav>
-
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <img src="https://i.imgur.com/InZIqIO_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Hero Logo">
-            <div class="title-stack">plantPAL</div>
-        </div>
-    </section>
-
-    <section id="about">
-        <h2>ABOUT US</h2>
-        <p>Welcome to plantPAL, your partner in nurturing green life...</p>
-    </section>
-
-    <section id="info">
-        <h2>INFO</h2>
-         <p>Learn more about how plantPAL works and helps you care for your plants...</p>
-    </section>
-
-    <section id="founders">
-        <h2>FOUNDERS</h2>
-        <div class="founders-container">
-            <div class="founder-item">
-                <div class="founder-box">
-                    <img src="images/IMG-20250413-WA0049.jpg" alt="Founder Stephen Bobby Varghese">
-                </div>
-                <div class="founder-name">Stephen Bobby Varghese</div>
-            </div>
-
-            <div class="founder-item">
-                <div class="founder-box">
-                    <img src="https://i.pinimg.com/736x/ca/52/e6/ca52e6e168595f767c2121a68cc227b0.jpg" alt="Founder S Vinayak Ram">
-                </div>
-                <div class="founder-name">S Vinayak Ram</div>
-            </div>
-
-            <div class="founder-item">
-                <div class="founder-box">
-                    <img src="images/photo bhagath.jpg" alt="Founder Bhagath A S">
-                </div>
-                <div class="founder-name">Bhagath A S</div>
-            </div>
-
-            <div class="founder-item">
-                <div class="founder-box">
-                     <img src="https://i.pinimg.com/736x/ca/52/e6/ca52e6e168595f767c2121a68cc227b0.jpg" alt="Founder Anjana T">
-                </div>
-                <div class="founder-name">Anjana T</div>
-            </div>
-        </div>
-        <button class="pal-button" aria-label="Navigate to our PAL section">To Our PAL</button>
-    </section>
-
-    <noscript>
-        <style>
-            .nav-links {
-                display: block !important;
-            }
-        </style>
-        <div style="background: #ffcc00; color: black; text-align: center; padding: 10px;">
-            JavaScript is disabled in your browser. Some features may not work as intended.
-        </div>
-    </noscript>
-
-    <script>
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            let scrollPosition = window.scrollY;
-
-            // Change navbar style based on scroll position
-            let opacity = 1 - (scrollPosition / 500); // Adjust 500 for desired fade speed
-            opacity = Math.max(0, opacity); // Ensure opacity doesn't go below 0
-
-            navbar.style.backgroundColor = `rgba(15, 209, 1, ${opacity * 0.5})`; // Adjust initial and max opacity
-            navbar.style.boxShadow = `0 ${opacity * 4}px ${opacity * 8}px rgba(0,0,0,${opacity * 0.6})`;
-
-            if (scrollPosition > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
+    <button class="back-button" onclick="location.href='index.html'">Back to Main</button>
+    <h1>PAL</h1>
 </body>
 </html>
+
+
