@@ -81,13 +81,14 @@
             background-image: url('https://i.pinimg.com/736x/8b/51/7a/8b517a4a1c294fa391476acad7c2f3e0.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: scroll; /* Changed from fixed to scroll for better mobile support */
+            background-attachment: fixed; /* Parallax-like effect */
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            /* Removed padding-top, as content is centered */
         }
 
         .hero::before {
@@ -263,93 +264,6 @@
              transform: scale(1.05); /* Slight scale effect on hover */
          }
 
-        /* Mobile Styles */
-        .navbar-toggle {
-            display: none;
-        }
-
-        .navbar-toggle-label {
-            position: relative;
-            display: none;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-
-        .navbar-toggle-label span {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: black;
-            transform: translateY(-50%);
-            transition: background-color 0.3s ease;
-        }
-
-        .navbar-toggle-label span::before,
-        .navbar-toggle-label span::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: black;
-            transition: transform 0.3s ease;
-        }
-
-        .navbar-toggle-label span::before {
-            top: -8px;
-        }
-
-        .navbar-toggle-label span::after {
-            top: 8px;
-        }
-
-        #navbar-toggle:checked + .navbar-toggle-label span {
-            background-color: transparent;
-        }
-
-        #navbar-toggle:checked + .navbar-toggle-label span::before {
-            transform: translateY(8px) rotate(45deg);
-        }
-
-        #navbar-toggle:checked + .navbar-toggle-label span::after {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: rgba(15, 209, 1, 0.9);
-                text-align: center;
-                padding: 1rem 0;
-                border-radius: 0 0 20px 20px;
-            }
-
-            .nav-links a {
-                padding: 0.75rem;
-                display: block;
-            }
-
-            .navbar-toggle-label {
-                display: block;
-            }
-
-            #navbar-toggle:checked ~ .nav-links {
-                display: flex;
-            }
-             .navbar.scrolled .nav-links a {
-             color: black;
-        }
-        }
-
     </style>
 </head>
 <body>
@@ -359,10 +273,6 @@
                 <img src="https://i.imgur.com/InZIqIO_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="Logo">
             </div>
         </div>
-        <input type="checkbox" id="navbar-toggle" class="navbar-toggle">
-        <label for="navbar-toggle" class="navbar-toggle-label">
-            <span></span>
-        </label>
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#about">About</a>
@@ -393,7 +303,7 @@
         <div class="founders-container">
             <div class="founder-item">
                 <div class="founder-box">
-                    <img src="images/IMG-20250413-WA0049.jpg" alt="Founder Stephen Bobby Varghese">
+                    <img src="https://i.pinimg.com/736x/ca/52/e6/ca52e6e168595f767c2121a68cc227b0.jpg" alt="Founder Stephen Bobby Varghese">
                 </div>
                 <div class="founder-name">Stephen Bobby Varghese</div>
             </div>
@@ -407,7 +317,7 @@
 
             <div class="founder-item">
                 <div class="founder-box">
-                    <img src="images/photo bhagath.jpg" alt="Founder Bhagath A S">
+                    <img src="https://i.pinimg.com/736x/ca/52/e6/ca52e6e168595f767c2121a68cc227b0.jpg" alt="Founder Bhagath A S">
                 </div>
                 <div class="founder-name">Bhagath A S</div>
             </div>
@@ -419,19 +329,17 @@
                 <div class="founder-name">Anjana T</div>
             </div>
         </div>
-        <button class="pal-button" aria-label="Navigate to our PAL section">To Our PAL</button>
+        <button class="pal-button">To Our PAL</button>
     </section>
 
-    <noscript>
-        <style>
-            .nav-links {
-                display: block !important;
-            }
-        </style>
-        <div style="background: #ffcc00; color: black; text-align: center; padding: 10px;">
-            JavaScript is disabled in your browser. Some features may not work as intended.
-        </div>
-    </noscript>
+    <!-- New section for dynamic content -->
+    <section id="dynamic-content" style="display: none;">
+        <h2>New Page Content</h2>
+        <p>This is the content of the new page loaded within the same webpage.</p>
+    </section>
+
+    <!-- Button to load new page content -->
+    <button id="load-content-button">Load New Page</button>
 
     <script>
         window.addEventListener('scroll', function() {
@@ -450,6 +358,17 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+        });
+
+        document.getElementById('load-content-button').addEventListener('click', function() {
+            // Hide other sections
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('about').style.display = 'none';
+            document.getElementById('info').style.display = 'none';
+            document.getElementById('founders').style.display = 'none';
+
+            // Show the dynamic content section
+            document.getElementById('dynamic-content').style.display = 'block';
         });
     </script>
 </body>
