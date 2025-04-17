@@ -217,6 +217,13 @@
             position: relative;
             padding: 15px; /* Internal padding */
             overflow: hidden; /* Hide potential overflow if needed */
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .founder-box:hover {
+            transform: scale(1.05);
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.6), 0 0 16px rgba(15, 209, 1, 0.6);
         }
 
         #founders .founder-box img {
@@ -347,28 +354,28 @@
         <h2>FOUNDERS</h2>
         <div class="founders-container">
             <div class="founder-item">
-                <div class="founder-box">
+                <div class="founder-box" onclick="location.href='stephen.html'">
                     <img src="images/steven.jpg" alt="Founder Steven Boby Varghese">
                 </div>
                 <div class="founder-name">Steven Boby Varghese</div>
             </div>
 
             <div class="founder-item">
-                <div class="founder-box">
+                <div class="founder-box" onclick="location.href='anjana.html'">
                      <img src="images/anjanat.png.jpg" alt="Founder Anjana T">
                 </div>
                 <div class="founder-name">Anjana T</div>
             </div>
 
             <div class="founder-item">
-                <div class="founder-box">
+                <div class="founder-box" onclick="location.href='vinayak.html'">
                     <img src="images/svinayakram.png.jpeg" alt="Founder S Vinayak Ram">
                 </div>
                 <div class="founder-name">S Vinayak Ram</div>
             </div>
 
             <div class="founder-item">
-                <div class="founder-box">
+                <div class="founder-box" onclick="location.href='bhagath.html'">
                     <img src="images/photo bhagath.jpg" alt="Founder Bhagath A S">
                 </div>
                 <div class="founder-name">Bhagath A S</div>
