@@ -88,23 +88,12 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* Removed padding-top, as content is centered */
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-            z-index: 0;
+            margin-bottom: 0; /* Ensures no gap between sections */
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .hero-content img {
@@ -414,7 +403,7 @@
 
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            document.body.style.overflow = navLinks.class.contains('active') ? 'hidden' : '';
         });
 
         // Close menu when clicking a link
