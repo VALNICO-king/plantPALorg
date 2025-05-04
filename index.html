@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PlantPAL - Smart irrigation solutions for your plants">
+    <meta name="theme-color" content="#0FD101">
+    <script>
+        // Dynamically set theme color for unsupported browsers
+        if (!('theme-color' in document.createElement('meta'))) {
+            const themeColorMeta = document.createElement('meta');
+            themeColorMeta.name = 'theme-color';
+            themeColorMeta.content = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#0FD101' : '#0FD101';
+            document.head.appendChild(themeColorMeta);
+        }
+    </script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-navbutton-color" content="#0FD101">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="color-scheme" content="light dark">
     <title>plantPAL</title>
     <style>
         * {
@@ -278,6 +294,25 @@
             transition: all 0.3s ease;
         }
 
+        .logo-media-container {
+            width: 350px;
+            height: 350px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            margin-left: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Changed from cover to contain */
+            opacity: 0; /* Start with opacity 0 */
+        }
+
         /* Mobile responsive styles */
         @media screen and (max-width: 768px) {
             .menu-toggle {
@@ -311,6 +346,39 @@
                 background-color: white;
             }
         }
+
+        @keyframes fadeInOut {
+             0%, 40% {    /* Stay at 0 opacity for first 40% (2 seconds of 5-second duration) */
+                 opacity: 0;
+             }
+             60% {        /* Fade in from 40% to 60% */
+                 opacity: 1;
+             }
+             80% {        /* Stay visible until 80% */
+                 opacity: 1;
+             }
+             100% {       /* Fade out for last 20% */
+                 opacity: 0;
+             }
+        }
+
+        .fade-animation {
+             animation: fadeInOut 3s ease-in-out infinite;
+             opacity: 0;
+        }
+
+        /* Add to the existing <style> section */
+        .hero-logo-container {
+            background: transparent;
+        }
+
+        .about-section {
+            text-align: center;
+        }
+
+        .info-section {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -335,17 +403,25 @@
 
     <section class="hero" id="home">
         <div class="hero-content">
-            <img src="images/planPALlogo.png.png" alt="Hero Logo">
+            <div class="logo-media-container hero-logo-container">
+                <!-- Video overlay -->
+                <video autoplay muted loop class="fade-animation" 
+                       preload="auto" 
+                       poster="path-to-fallback-image.jpg">  <!-- Add a fallback image -->
+                    <source src="video elements/tmpqv205xaz-Picsart-BackgroundRemover.mp4" type="video/mp4">
+                    <p>Your browser doesn't support HTML5 video. Here is a <a href="video elements/tmpqv205xaz-Picsart-BackgroundRemover.mp4">link to the video</a> instead.</p>
+                </video>
+            </div>
             <div class="title-stack">plantPAL</div>
         </div>
     </section>
 
-    <section id="about" style="text-align: center;">
+    <section id="about" class="about-section">
         <h2>ABOUT US</h2>
         <p>Welcome to plantPAL, your partner in nurturing green life...</p>
     </section>
 
-        <section id="info" style="text-align: center;">
+        <section id="info" class="info-section">
             <h2>Why PlantPal?</h2>
             <p>We specialize in smart irrigation solutions that take the hassle out of plant care. Our Automatic Watering System uses real-time sensors and microcontrollers to detect when your plants need water and delivers just the right amount—automatically. Designed for home gardens and greenhouses, our system helps you save water, time, and effort while promoting healthy plant growth. We're passionate about combining technology with sustainability to make plant care simple and efficient for everyone.</p>
         </section>
@@ -355,28 +431,28 @@
         <div class="founders-container">
             <div class="founder-item">
                 <div class="founder-box" onclick="location.href='stephen.html'">
-                    <img src="images/steven.jpg" alt="Founder Steven Boby Varghese">
+                    <img src="images/steven.jpg" alt="Founder Steven Boby Varghese" loading="lazy">
                 </div>
                 <div class="founder-name">Steven Boby Varghese</div>
             </div>
 
             <div class="founder-item">
                 <div class="founder-box" onclick="location.href='anjana.html'">
-                     <img src="images/anjanat.png.jpg" alt="Founder Anjana T">
+                     <img src="images/anjanat.png.jpg" alt="Founder Anjana T" loading="lazy">
                 </div>
                 <div class="founder-name">Anjana T</div>
             </div>
 
             <div class="founder-item">
                 <div class="founder-box" onclick="location.href='vinayak.html'">
-                    <img src="images/svinayakram.png.jpeg" alt="Founder S Vinayak Ram">
+                    <img src="images/svinayakram.png.jpeg" alt="Founder S Vinayak Ram" loading="lazy">
                 </div>
                 <div class="founder-name">S Vinayak Ram</div>
             </div>
 
             <div class="founder-item">
                 <div class="founder-box" onclick="location.href='bhagath.html'">
-                    <img src="images/photo bhagath.jpg" alt="Founder Bhagath A S">
+                    <img src="images/photo bhagath.jpg" alt="Founder Bhagath A S" loading="lazy">
                 </div>
                 <div class="founder-name">Bhagath A S</div>
             </div>
@@ -385,24 +461,34 @@
     </section>
 
     <script>
-        window.addEventListener('scroll', function() {
+        // Add before the scroll event listener:
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Modify the scroll event listener:
+        window.addEventListener('scroll', debounce(function() {
             const navbar = document.querySelector('.navbar');
             let scrollPosition = window.scrollY;
-            let opacity = 1 - (scrollPosition / 500); // Adjust 500 to control fade speed
-
-            // Ensure opacity is between 0 and 1
+            let opacity = 1 - (scrollPosition / 500);
             opacity = Math.max(0, Math.min(1, opacity));
-
-            // Change navbar style based on scroll position
             navbar.style.backgroundColor = `rgba(15, 209, 1, ${0.5 * opacity})`;
             navbar.style.boxShadow = `0 4px 8px rgba(0,0,0,${0.6 * opacity})`;
-
+            
             if (scrollPosition > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-        });
+        }, 10));
 
         // Mobile menu toggle functionality
         const menuToggle = document.querySelector('.menu-toggle');
@@ -410,7 +496,7 @@
 
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            document.body.style.overflow = navLinks.class.contains('active') ? 'hidden' : '';
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
         });
 
         // Close menu when clicking a link
@@ -427,6 +513,16 @@
                 navLinks.classList.remove('active');
                 document.body.style.overflow = '';
             }
+        });
+
+        // Add to your existing script section
+        document.querySelector('.logo-media-container video').addEventListener('loadeddata', function() {
+            this.style.opacity = '1';
+        });
+
+        // Add playsinline attribute dynamically for better compatibility
+        document.querySelectorAll('video').forEach(video => {
+            video.setAttribute('playsinline', '');
         });
     </script>
 </body>
