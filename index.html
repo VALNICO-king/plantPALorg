@@ -348,23 +348,23 @@
         }
 
         @keyframes fadeInOut {
-             0%, 40% {    /* Stay at 0 opacity for first 40% (2 seconds of 5-second duration) */
-                 opacity: 0;
-             }
-             60% {        /* Fade in from 40% to 60% */
-                 opacity: 1;
-             }
-             80% {        /* Stay visible until 80% */
-                 opacity: 1;
-             }
-             100% {       /* Fade out for last 20% */
-                 opacity: 0;
-             }
+            0% {        /* Start at 0 opacity */
+                opacity: 0;
+            }
+            40% {       /* Fade in over 2 seconds (0-40% of 5s) */
+                opacity: 1;
+            }
+            80% {       /* Stay visible until 80% */
+                opacity: 1;
+            }
+            100% {      /* Fade out for last 20% */
+                opacity: 0;
+            }
         }
 
         .fade-animation {
-             animation: fadeInOut 3s ease-in-out infinite;
-             opacity: 0;
+            animation: fadeInOut 5s ease-in-out infinite;
+            opacity: 0;
         }
 
         /* Add to the existing <style> section */
