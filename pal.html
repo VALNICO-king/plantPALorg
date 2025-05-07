@@ -4,31 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
             min-height: 100vh;
-            background: linear-gradient(to bottom right, #0D0171, #55E8FF);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background: linear-gradient(to bottom, #000500, #002005);
+            background-attachment: fixed;
             font-family: Impact, Arial Black, Arial, sans-serif;
+            color: white;
         }
         
         h1 {
-            color: #0FD101;
-            font-size: 5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 3rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin-top: 20px;
+            margin-left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h1 .fa-seedling {
+            color: #90EE90;
+            font-size: 2.5rem;
         }
         
         .back-button {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            bottom: 20px;
+            right: 20px;
             padding: 12px 25px;
             background-color: #041405;
-            color: #0EF516;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -42,11 +55,422 @@
             background-color: #0caa01;
             transform: scale(1.05);
         }
+        
+        .prototype-text {
+            color: white;
+            font-size: 3rem;
+            margin-left: 120px;
+            margin-top: 20px;
+            max-width: 800px;
+            line-height: 1.6;
+            text-align: left;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .prototype-text span {
+            font-size: 5rem;
+            margin-left: 30px;
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            top: -4px;
+        }
+
+        .fa-lightbulb {
+            font-size: 3.5rem;
+            margin-left: 20px;
+            color: white;
+            vertical-align: middle;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .fa-lightbulb:hover {
+            transform: scale(1.1);
+            color: #FFD700;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            z-index: 1001; /* Ensure modal content is above everything */
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1; /* Lower than the navigation buttons */
+        }
+
+        .carousel-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            object-fit: contain;
+            z-index: 2; /* Higher than container, lower than buttons */
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+            z-index: 3; /* Higher than non-active images, still lower than buttons */
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            -webkit-user-select: none;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000; /* Ensure buttons are above images */
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .prototype-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .video-container {
+            width: 100%;
+            margin-top: 40px;
+            padding: 0 20px;
+        }
+        
+        .prototype-video {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-tag {
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            margin: 30px auto 15px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .fa-leaf {
+            margin: 0 15px;
+            color: #90EE90;
+        }
+
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .carousel-container img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            display: block;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
     <button class="back-button" onclick="location.href='index.html'">Back to Main</button>
-    <h1>PAL</h1>
+    <h1><i class="fa-solid fa-seedling"></i>PAL</h1>
+    <div class="prototype-container">
+        <p class="prototype-text">First prototype <span>&#8614;</span><i class="fa-solid fa-lightbulb" onclick="openModal(1)"></i></p>
+        <p class="prototype-text">Second prototype <span>&#8614;</span><i class="fa-solid fa-lightbulb" onclick="openModal(2)"></i></p>
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="carousel-container">
+                <div class="loading-spinner" id="loadingSpinner"></div>
+                <img id="currentImage" class="carousel-image active" src="" alt="Current prototype image">
+                <img id="nextImage" class="carousel-image" src="" alt="Next prototype image">
+            </div>
+            <a class="prev" onclick="changeImage(-1, true)">&#10094;</a>
+            <a class="next" onclick="changeImage(1, true)">&#10095;</a>
+        </div>
+    </div>
+
+    <h2 class="video-tag"><i class="fa-solid fa-leaf"></i>Initialization of plantPAL<i class="fa-solid fa-leaf"></i></h2>
+    
+    <div class="video-container">
+        <video class="prototype-video" controls autoplay muted loop>
+            <source src="product prototype video/video_2025-05-08_01-33-11.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        const prototypeImages = {
+            1: [
+                './product prototype images 1/photo_2025-05-08_01-02-40.jpg',
+                './product prototype images 1/photo_2025-05-08_01-03-08.jpg'
+            ],
+            2: [
+                './product prototype images 2/photo_2025-05-08_00-10-17.jpg',
+                './product prototype images 2/photo_2025-05-08_01-28-48.jpg'
+            ]
+        };
+        
+        let currentImageIndex = 0;
+        let slideInterval;
+        let currentPrototype = 1;
+        let isTransitioning = false;
+        let userInteracted = false;
+
+        function openModal(prototypeNumber) {
+            console.log('Opening modal for prototype:', prototypeNumber);
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'block';
+            currentPrototype = prototypeNumber;
+            currentImageIndex = 0;
+            userInteracted = false;
+            showImage(currentImageIndex);
+            startAutoSlide();
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+            stopAutoSlide();
+            userInteracted = false;
+        }
+
+        function loadImage(url) {
+            console.log('Attempting to load image:', url);
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    console.log('Successfully loaded image:', url);
+                    resolve(url);
+                };
+                img.onerror = () => {
+                    console.error('Failed to load image:', url);
+                    reject(new Error(`Failed to load image: ${url}`));
+                };
+                img.src = url;
+            });
+        }
+
+        async function showImage(index) {
+            if (isTransitioning) return;
+            
+            const spinner = document.getElementById('loadingSpinner');
+            const currentImg = document.getElementById('currentImage');
+            const nextImg = document.getElementById('nextImage');
+            const images = prototypeImages[currentPrototype];
+            
+            try {
+                spinner.style.display = 'block';
+                console.log('Loading images for prototype', currentPrototype, 'index', index);
+                
+                // Try loading with relative path first
+                try {
+                    await Promise.all([
+                        loadImage(images[index]),
+                        loadImage(images[(index + 1) % images.length])
+                    ]);
+
+                    currentImg.src = images[index];
+                    nextImg.src = images[(index + 1) % images.length];
+                    currentImg.style.opacity = '1';
+                    nextImg.style.opacity = '0';
+                    currentImageIndex = index;
+                } catch (error) {
+                    console.error('Failed with relative path, trying absolute path');
+                    // Try with absolute path
+                    const absoluteBasePath = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+                    await Promise.all([
+                        loadImage(absoluteBasePath + images[index].replace('./', '')),
+                        loadImage(absoluteBasePath + images[(index + 1) % images.length].replace('./', ''))
+                    ]);
+
+                    currentImg.src = absoluteBasePath + images[index].replace('./', '');
+                    nextImg.src = absoluteBasePath + images[(index + 1) % images.length].replace('./', '');
+                    currentImg.style.opacity = '1';
+                    nextImg.style.opacity = '0';
+                    currentImageIndex = index;
+                }
+            } catch (error) {
+                console.error('Failed to load images:', error);
+                alert('Failed to load images. Please check the browser console for details.');
+            } finally {
+                spinner.style.display = 'none';
+            }
+        }
+
+        function changeImage(direction, manual = false) {
+            if (isTransitioning) return;
+            if (manual) {
+                userInteracted = true;
+                stopAutoSlide();
+            }
+            
+            isTransitioning = true;
+            const images = prototypeImages[currentPrototype];
+            let newIndex = currentImageIndex + direction;
+            if (newIndex >= images.length) newIndex = 0;
+            if (newIndex < 0) newIndex = images.length - 1;
+
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.style.display = 'block';
+
+            const currentImg = document.getElementById('currentImage');
+            const nextImg = document.getElementById('nextImage');
+
+            loadImage(images[newIndex])
+                .then(() => {
+                    nextImg.src = images[newIndex];
+                    nextImg.style.opacity = '1';
+                    currentImg.style.opacity = '0';
+
+                    setTimeout(() => {
+                        currentImg.src = images[newIndex];
+                        currentImg.style.opacity = '1';
+                        nextImg.style.opacity = '0';
+                        currentImageIndex = newIndex;
+                        isTransitioning = false;
+                        if (manual) {
+                            setTimeout(startAutoSlide, 5000);
+                        }
+                        spinner.style.display = 'none';
+                    }, 500);
+                })
+                .catch(error => {
+                    console.error('Failed to load image:', error);
+                    isTransitioning = false;
+                    spinner.style.display = 'none';
+                });
+        }
+
+        function startAutoSlide() {
+            stopAutoSlide();
+            if (!userInteracted) {
+                slideInterval = setInterval(() => {
+                    if (!isTransitioning && !userInteracted) {
+                        changeImage(1, false);
+                    }
+                }, 4000);
+            }
+        }
+
+        function stopAutoSlide() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                slideInterval = null;
+            }
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Handle mouse interactions
+        document.querySelector('.modal-content').addEventListener('mouseenter', () => {
+            userInteracted = true;
+            stopAutoSlide();
+        });
+
+        document.querySelector('.modal-content').addEventListener('mouseleave', () => {
+            userInteracted = false;
+            startAutoSlide();
+        });
+
+        // Update click handlers for navigation buttons
+        document.querySelectorAll('.prev, .next').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const direction = e.target.classList.contains('next') ? 1 : -1;
+                changeImage(direction, true);
+            });
+        });
+
+        // Initial preload of images
+        window.addEventListener('load', () => {
+            console.log('Page loaded, preloading images...');
+            Object.entries(prototypeImages).forEach(([prototype, images]) => {
+                console.log('Preloading images for prototype:', prototype);
+                images.forEach(imageSrc => {
+                    loadImage(imageSrc).catch(error => {
+                        console.error('Error preloading image:', imageSrc, error);
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 

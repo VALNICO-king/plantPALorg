@@ -7,28 +7,49 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
             min-height: 100vh;
-            background: linear-gradient(to bottom right, #0D0171, #55E8FF);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;  /* Added to center vertically */
+            align-items: center;
+            background: linear-gradient(135deg, #0D0171, #55E8FF);
+            background-attachment: fixed;
             font-family: Impact, Arial Black, Arial, sans-serif;
+            color: white;
+        }
+
+        .content-wrapper {
+            text-align: center;
+            max-width: 1000px;      /* Increased from 800px to accommodate larger text */
+            padding: 20px;
         }
         
         h1 {
-            color: #0FD101;
-            font-size: 5rem;
+            color: white;
+            font-size: 4.5rem;      /* Increased from 3rem */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-top: 0;       /* Changed from 20px to 0 */
+            text-align: center;
         }
-        
+
+        p {
+            color: white;
+            font-size: 1.8rem;      /* Increased from 1.2rem */
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            margin: 20px 0;      /* Added margin */
+            font-style: italic;      /* Added to make text italic */
+        }
+
         .back-button {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            bottom: 20px;        /* Changed from top to bottom */
+            right: 20px;         /* Changed from left to right */
             padding: 12px 25px;
             background-color: #041405;
-            color: #0EF516;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -46,6 +67,9 @@
 </head>
 <body>
     <button class="back-button" onclick="location.href='index.html'">Back to Main</button>
-    <h1>Steven Boby Varghese</h1>
+    <div class="content-wrapper">
+        <h1>Steven Boby Varghese</h1>
+        <p>Managed documentation and 3D modeling, combining technical precision with structured reporting to create professional models and formal presentations.</p>
+    </div>
 </body>
 </html>
